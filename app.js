@@ -27,7 +27,7 @@ app.use('/favoritos', favoritosRoutes);
 app.use('/rechazados', rechazadosRoutes);
 app.use('/coincidencias', coincidenciasRoutes);
 
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 8081);
 const PORT = app.get('port');
 
 app.listen(PORT, () => {
