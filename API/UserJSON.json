@@ -1,0 +1,10 @@
+{
+  "nombreUsuario": "Pablo Maldonado",
+  "email": "pablonadoMaldablo@gmail.com",
+  "edad": "18",
+  "sexo": "M",
+  "sexoInteresado": ["F", "M"],
+  "ciudad": "Montevideo",
+  "pais": "Uruguay",
+  "frasePersonal": "Soy programador, para cuando programamos nuestra cita?"
+}

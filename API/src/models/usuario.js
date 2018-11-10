@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const usuarioSchema = new Schema({
-  _ID: Schema.Types.ObjectId,
 
   nombreUsuario: { // *
     type: String,
@@ -24,6 +23,12 @@ const usuarioSchema = new Schema({
     type: String,
     required: [true, 'No gender?']
   },
+
+  sexoInteresado: {
+    type: Array,
+    validate: [sexoInteresadoLimit, 'More than 2 genders?'],
+    required: [true, 'No interests?'],
+  },
   
   ciudad: { // *
     type: String,
@@ -35,19 +40,31 @@ const usuarioSchema = new Schema({
     required: [true, 'No country?']
   },
   
-  frasePersonal: String,
-  
   meGusta: [{
-    type: String,
-    ref: 'usuariosMeGusta'
+    type: Schema.Types.ObjectId,
+    ref: 'Usuario'
+  }],
+  
+  noMeGusta: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Usuario'
   }],
 
-  noMeGusta: [{
-    type: String,
-    ref: 'usuariosNoMeGusta'
+  frasePersonal: String,
+
+  likes: [{
+    type: String
+  }],
+  
+  dislikes: [{
+    type: String
   }]
 
 });
+
+function sexoInteresadoLimit(val) {
+  return val.length <= 2;
+}
 
 const Usuario = mongoose.model('Usuario', usuarioSchema);
 
