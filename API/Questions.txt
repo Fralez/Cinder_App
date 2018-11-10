@@ -1,2 +1,4 @@
 Como se desea representar los sexos interesados?
-Como usar validators de letras? //match
+Preguntar por que referencia en arrayLimit.
+Como usar validators de letras? // match RegEx
+gustos representados como likes/dislikes

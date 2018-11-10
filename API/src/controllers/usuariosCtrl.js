@@ -38,7 +38,6 @@ module.exports = {
 				console.log(err);
 			} else {
 				validated = true;
-				console.log("estoy validadi :D");
 			}
 		})
 		

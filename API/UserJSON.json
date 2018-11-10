@@ -6,5 +6,7 @@
   "sexoInteresado": ["F", "M"],
   "ciudad": "Montevideo",
   "pais": "Uruguay",
-  "frasePersonal": "Soy programador, para cuando programamos nuestra cita?"
+  "frasePersonal": "Soy programador, para cuando programamos nuestra cita?",
+  "likes": ["", ""],
+  "dislikes": ["", ""]
 }

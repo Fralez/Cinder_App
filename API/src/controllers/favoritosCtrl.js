@@ -5,8 +5,8 @@ module.exports = {
 
   getFavs: async (req, res, next) => {
     const { idUsuario } = req.params;
-    const user = await Usuario.findById(idUsuario).populate('meGusta');
-    res.status(200).json(user.meGusta);
+    const user = await Usuario.findById(idUsuario).populate('favoritos');
+    res.status(200).json(user.favoritos);
   },
 
   postFav: async (req, res, next) => {
@@ -15,22 +15,21 @@ module.exports = {
       const { idFav } = req.body;
       
       const user = await Usuario.findById(idUsuario);
-      let { meGusta, _id } = user;
+      let { favoritos, _id } = user;
       
-      const alreadyExists = meGusta.find( async element => {
+      const alreadyExists = favoritos.find( async element => {
         if (element == idFav) {
           return true
         }
       });
 
       if (alreadyExists) {
-        res.status(200).json({error: "El usuario ya estaba marcado como favorito", success: true});
+        res.status(200).json({error: "El usuario ya estaba marcado como favorito", success: true, flag: "alreadyExists"});
       } else {
-        meGusta.push(idFav);
+        favoritos.push(idFav);
         await Usuario.findByIdAndUpdate(_id, user);
-        res.status(200).json({message: "El usuario fue marcado como favorito con éxito", success: true});
+        res.status(200).json({message: "El usuario fue marcado como favorito con éxito", success: true, flag: "newFav"});
       }
-      
       
 
     } catch (err) {

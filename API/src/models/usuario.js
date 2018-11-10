@@ -39,16 +39,6 @@ const usuarioSchema = new Schema({
     type: String,
     required: [true, 'No country?']
   },
-  
-  meGusta: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Usuario'
-  }],
-  
-  noMeGusta: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Usuario'
-  }],
 
   frasePersonal: String,
 
@@ -58,6 +48,16 @@ const usuarioSchema = new Schema({
   
   dislikes: [{
     type: String
+  }],
+  
+  favoritos: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Usuario'
+  }],
+  
+  rechazados: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Usuario'
   }]
 
 });
