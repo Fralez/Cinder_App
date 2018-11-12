@@ -1,4 +1,18 @@
+
+TEMA DE SEXOS
 Como se desea representar los sexos interesados?
-Preguntar por que referencia en arrayLimit.
 Como usar validators de letras? // match RegEx
-gustos representados como likes/dislikes
+Se tiene que validar, en favoritos y rechazados, si coincide con sexos interesados?
+
+
+Preguntar por que referencia en arrayLimit.
+
+** gustos representados como likes/dislikes
+
+Puedo poner un gusto en likes y dislikes a la vez? Como podria validar eso?
+
+El email no tendria que ser unico?
+
+Incognita: Que es el model de usuario con solo el ID en swaggerhub? Por que se haria eso?
+
+Favoritos/Rechazados: Para reconocer al usuario que se quiere marcar, decidi pasar su ID en el body. Esta bien?

@@ -5,7 +5,7 @@ module.exports = {
 
   getBloqs: async (req, res, next) => {
     const { idUsuario } = req.params;
-    const user = await Usuario.findById(idUsuario).populate('rechazados');
+    const user = await Usuario.findById(idUsuario).populate('rechazados', '_id');
     res.status(200).json(user.rechazados);
   },
 
