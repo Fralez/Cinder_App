@@ -1,12 +1,12 @@
 {
-  "nombreUsuario": "Pablo Maldonado",
-  "email": "pablonadoMaldablo@gmail.com",
+  "nombreUsuario": "xxx",
+  "email": "xxx@xmail.com",
   "edad": "18",
-  "sexo": "M",
-  "sexoInteresado": ["F", "M"],
-  "ciudad": "Montevideo",
-  "pais": "Uruguay",
-  "frasePersonal": "Soy programador, para cuando programamos nuestra cita?",
-  "likes": ["", ""],
-  "dislikes": ["", ""]
+  "sexo": "x",
+  "sexoInteresado": "x",
+  "ciudad": "x",
+  "pais": "x",
+  "frasePersonal": "x",
+  "meGusta": ["x", "x"],
+  "noMeGusta": ["x", "x"]
 }

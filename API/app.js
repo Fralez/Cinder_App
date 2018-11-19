@@ -10,9 +10,9 @@ mongoose.Promise = global.Promise;
 // Create app
 const app = express();
 
-// Dev uses:
 app.use(bodyParser.json());
 app.use(morgan('dev'));
+
 
 // Routes middlewares
 const usuariosRoutes = require('./src/routes/usuariosRoutes').Router;
@@ -26,6 +26,7 @@ app.use('/usuarios', usuariosRoutes);
 app.use('/favoritos', favoritosRoutes);
 app.use('/rechazados', rechazadosRoutes);
 app.use('/coincidencias', coincidenciasRoutes);
+
 
 app.set('port', process.env.PORT || 8081);
 const PORT = app.get('port');

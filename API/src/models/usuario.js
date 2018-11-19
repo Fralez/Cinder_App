@@ -10,6 +10,7 @@ const usuarioSchema = new Schema({
   
   email: { // *
     type: String,
+    validate: [validateEmail, 'Not a valid email?'],
     required: [true, 'No email?']
   },
   
@@ -21,13 +22,13 @@ const usuarioSchema = new Schema({
   
   sexo: { // *
     type: String,
+    enum: ['M', 'F'],
     required: [true, 'No gender?']
   },
 
   sexoInteresado: {
-    type: Array,
-    validate: [sexoInteresadoLimit, 'More than 2 genders?'],
-    required: [true, 'No interests?'],
+    type: String,
+    enum: ['M', 'F', 'A']
   },
   
   ciudad: { // *
@@ -42,11 +43,11 @@ const usuarioSchema = new Schema({
 
   frasePersonal: String,
 
-  likes: [{
+  meGusta: [{
     type: String
   }],
   
-  dislikes: [{
+  noMeGusta: [{
     type: String
   }],
   
@@ -64,6 +65,11 @@ const usuarioSchema = new Schema({
 
 function sexoInteresadoLimit(val) {
   return val.length <= 2;
+}
+
+function validateEmail(email) {
+  var EmailRegEx = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return EmailRegEx.test(email);
 }
 
 const Usuario = mongoose.model('Usuario', usuarioSchema);
