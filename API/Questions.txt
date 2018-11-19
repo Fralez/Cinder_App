@@ -1,1 +1,0 @@
-Puedo poner un gusto en likes y dislikes a la vez? Como podria validar eso?

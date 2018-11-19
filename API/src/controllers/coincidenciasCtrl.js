@@ -12,26 +12,26 @@ module.exports = {
     const { idUsuario } = req.params;
     
     try {
+      // USER
       const user = await Usuario.findById(idUsuario);
       
-      const userFavs = user.favoritos;
-      const userBloqs = user.rechazados;
-      
-
       let coincidences = await Usuario.find(
         {
           ciudad: user.ciudad,
           pais: user.pais,
-
+          
           $or: [{
             sexo: [ ...(user.sexoInteresado == 'A' ? ['F', 'M'] : user.sexoInteresado) ] 
           }]
         }
       );
-
-      coincidences = removeFavsAndBloqs(coincidences);
-
-      function removeFavsAndBloqs(coincidences) {
+      
+      coincidences = removeFavsAndBloqs(coincidences, user);
+        
+      function removeFavsAndBloqs(coincidences, user) {
+        const userFavs = user.favoritos;
+        const userBloqs = user.rechazados;
+        
         const newCoincidences = coincidences.filter(coincidence => {
           
           const isInFavs = userFavs.some(favUserId => {
@@ -48,15 +48,41 @@ module.exports = {
       }
 
       let coincidenceRates = []; // This stores the Rating objects
-
       /**
-       * Rating Object:
+       * RATING OBJECT:
        * UserID: ObjectId,
        * LikeRate: Number, // Total Likes rate - +1 when the users share a like
-       * DislikeRate: Number // Total Dislikes rate - +1 when the main user like is a secondary user dislike
+       * DislikeRate: Number // Total Dislikes rate - +1 when the users share a dislike
        * TotalRate: Number // This equals to LikeRate - DislikeRate
        */
 
+      coincidences.forEach((coincidence) => {
+        // Rating object:
+        let ratingObject = {
+          userId: coincidence._id,
+          likeRate: 0,
+          dislikeRate: 0,
+          get totalRate() {
+            return this.likeRate + this.dislikeRate;
+          },
+        };
+        // Like Rate:
+        coincidence.meGusta.forEach(meGusta => {
+          if (user.meGusta.includes(meGusta)) {
+            ratingObject.likeRate++;
+          }
+        });
+        // Dislike Rate
+        coincidence.noMeGusta.forEach(noMeGusta => {
+          if (user.noMeGusta.includes(noMeGusta)) {
+            ratingObject.dislikeRate++;
+          }
+        });
+        coincidenceRates.push(ratingObject);
+      });
+
+      // When the code arrives here, it already has all the possible coincidences 
+      // ON PROGRESS
       
       res.status(200).json(coincidences);
       

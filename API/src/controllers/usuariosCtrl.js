@@ -15,20 +15,22 @@ module.exports = {
 			const newUser = new Usuario(req.body);
 			await newUser.save();
 
-			// POSSIBLE SOLUTION: same meGusta && noMeGusta item
-
-			// if (newUser.meGusta && newUser.noMeGusta) {
-			// 	newUser.meGusta.find(meGusta => {
-			// 		return newUser.noMeGusta.find(noMeGusta => {
-			// 			return meGusta == noMeGusta;
-			// 		});
-			// 	});
-			// }
+			if (newUser.meGusta && newUser.noMeGusta) {
+				const sameItem = newUser.meGusta.find(meGusta => {
+					return newUser.noMeGusta.find(noMeGusta => {
+						return meGusta == noMeGusta;
+					});
+				});
+				if (sameItem) {
+					throw new Error('Error: Same meGusta && noMeGusta item');
+				}
+			}
+			
 			
 			res.status(201).json(newUser);
 
 		} catch (err) {
-			
+			console.log(err);
 			res.status(400).json({error: "Pedido equivocado. Faltan datos de usuario o están equivocados"});
 		}
 	},
