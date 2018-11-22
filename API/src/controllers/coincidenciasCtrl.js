@@ -53,10 +53,10 @@ module.exports = {
        * UserID: ObjectId,
        * LikeRate: Number, // Total Likes rate - +1 when the users share a like
        * DislikeRate: Number // Total Dislikes rate - +1 when the users share a dislike
-       * TotalRate: Number // This equals to LikeRate - DislikeRate
+       * TotalRate: Number // This equals to LikeRate + DislikeRate
        */
 
-      coincidences.forEach((coincidence) => {
+      await coincidences.forEach(coincidence => {
         // Rating object:
         let ratingObject = {
           userId: coincidence._id,
@@ -81,13 +81,16 @@ module.exports = {
         coincidenceRates.push(ratingObject);
       });
 
-      // When the code arrives here, it already has all the possible coincidences 
-      // ON PROGRESS
+      coincidenceRates.sort((a, b) => {
+        // ascendent order
+        return b.totalRate - a.totalRate;
+      });
+
+      const bestCoincidenceRates = coincidenceRates.slice(0, 19); // The 20 most matching users
       
-      res.status(200).json(coincidences);
+      res.status(200).json(bestCoincidenceRates);
       
     } catch (err) {
-      console.log('ERROR! ', err);
       res.status(404).json({error: "El usuario con idUsuario no pudo ser encontrado"});
     }
     
