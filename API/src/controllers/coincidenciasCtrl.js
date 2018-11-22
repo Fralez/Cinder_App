@@ -1,12 +1,5 @@
 const { Usuario } = require('../models/usuario');
 
-/**
- * PASOS A SEGUIR:
- * [X] 1: Get a todos los usuarios que esten en la misma ciudad y pais que el usuario && que su ID no pertenezca a las listas de favoritos y rechazados && sexo == sexoInteresado
- * [] 2: Ordenar por coincidencias de cosas que le gustan al usuario y cosas que no le gustan al usuario
- * [] 3: Tomar los primeros 20 (los 20 que son mas compatibles)
- */
-
 module.exports = {
   coincidencias: async (req, res, next) => {
     const { idUsuario } = req.params;
@@ -59,7 +52,7 @@ module.exports = {
       await coincidences.forEach(coincidence => {
         // Rating object:
         let ratingObject = {
-          userId: coincidence._id,
+          _id: coincidence._id,
           likeRate: 0,
           dislikeRate: 0,
           get totalRate() {
@@ -86,9 +79,12 @@ module.exports = {
         return b.totalRate - a.totalRate;
       });
 
-      const bestCoincidenceRates = coincidenceRates.slice(0, 19); // The 20 most matching users
+      // An array with the 20 most matching users
+      bestCoincidences = [
+        ...(coincidenceRates.map(item => item._id).slice(0, 19))
+      ]; 
       
-      res.status(200).json(bestCoincidenceRates);
+      res.status(200).json(bestCoincidences);
       
     } catch (err) {
       res.status(404).json({error: "El usuario con idUsuario no pudo ser encontrado"});

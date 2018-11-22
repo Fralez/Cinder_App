@@ -1,13 +1,11 @@
 const mongoose = require('mongoose');
 
-(async () => {
-	try {
-		mongoose.connect('mongodb://localhost:27017/cinderApp', { useNewUrlParser: true });
+mongoose.connect('mongodb://localhost:27017/cinderApp', { useNewUrlParser: true })
+	.then((result) => {
 		console.log("DB Connection successful.");
-	} catch (err) {
+	}).catch((err) => {
 		console.log('Connection Error: ', err);
-	}
-})();
+	});
 
 module.exports = {
 	mongoose
