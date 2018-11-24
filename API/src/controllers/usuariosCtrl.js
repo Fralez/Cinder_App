@@ -46,11 +46,11 @@ module.exports = {
 		const user = await Usuario.findById(idUsuario);
 
 		if (user) {
-			
+
 			return res.status(200).json(user);
 		} else {
 			
-			return res.status(404).json({error: "idUsuario no es válido"}); 
+			return res.status(400).json({error: "idUsuario no es válido"});
 		}
 	},
 	
@@ -59,6 +59,7 @@ module.exports = {
 		const { idUsuario } = req.params;
 
 		if (!ObjectID.isValid(idUsuario)) {
+			
 			return res.status(404).json({error: "idUsuario no es válido"});
 		}
 
