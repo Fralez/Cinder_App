@@ -79,7 +79,7 @@ module.exports = {
         return b.totalRate - a.totalRate;
       });
 
-      // An array with the 20 most matching users
+      // An array with the 20 most matching users Id's
       bestCoincidences = [
         ...(coincidenceRates.map(item => item._id).slice(0, 19))
       ]; 

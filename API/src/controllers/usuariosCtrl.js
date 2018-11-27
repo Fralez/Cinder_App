@@ -16,6 +16,7 @@ module.exports = {
 			const newUser = new Usuario(req.body);
 			await newUser.save();
 
+			// Verify likes & dislikes items
 			if (newUser.meGusta && newUser.noMeGusta) {
 				const sameItem = newUser.meGusta.find(meGusta => {
 					return newUser.noMeGusta.find(noMeGusta => {
@@ -30,27 +31,31 @@ module.exports = {
 			res.status(201).json(newUser);
 
 		} catch (err) {
-			res.status(400).json({error: "Pedido equivocado. Faltan datos de usuario o están equivocados"});
+			res.status(400).json({ error: "Pedido equivocado. Faltan datos de usuario o están equivocados" });
 		}
 	},
 	
 	// Gets a user's details
 	getUser: async (req, res, next) => {
-		const { idUsuario } = req.params;
-
-		if (!ObjectID.isValid(idUsuario)) {
+		
+		try {
+			const { idUsuario } = req.params;
 			
-			return res.status(404).json({error: "idUsuario no es válido"});
-		}
-
-		const user = await Usuario.findById(idUsuario);
-
-		if (user) {
-
-			return res.status(200).json(user);
-		} else {
+			if (!ObjectID.isValid(idUsuario)) {
+				throw new Error('Error: idUsuario no válido')
+			}
 			
-			return res.status(400).json({error: "idUsuario no es válido"});
+			const user = await Usuario.findById(idUsuario);
+			if (user) {
+
+				return res.status(200).json(user);
+			} else {
+				throw new Error('Error: usuario null')
+			}
+
+		} catch (err) {
+			
+			return res.status(404).json({error: err});
 		}
 	},
 	
@@ -59,11 +64,10 @@ module.exports = {
 		const { idUsuario } = req.params;
 
 		if (!ObjectID.isValid(idUsuario)) {
-			
 			return res.status(404).json({error: "idUsuario no es válido"});
 		}
 
-		try {		
+		try {
 			const newUser = req.body;
 
 			await Usuario.findByIdAndUpdate(idUsuario, newUser);
@@ -78,16 +82,15 @@ module.exports = {
 	
 	// Deletes a user
 	deleteUser: async (req, res, next) => {
-		try {
-			const { idUsuario } = req.params;
-			const deletedUser = await Usuario.findByIdAndDelete(idUsuario);
-			
-			res.status(200).json(deletedUser);
+		const { idUsuario } = req.params;
 		
-		} catch (err) {
-			
-			res.status(404).json({error: "idUsuario no es válido"});
+		if (!ObjectID.isValid(idUsuario)) {
+			return res.status(404).json({error: "idUsuario no es válido"});
 		}
+		
+		const deletedUser = await Usuario.findByIdAndDelete(idUsuario);
+		
+		res.status(200).json(deletedUser);
 	}
-	
+
 }

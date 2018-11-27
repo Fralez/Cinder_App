@@ -6,8 +6,13 @@ module.exports = {
   // Gets all user's bloqued users
   getBloqs: async (req, res, next) => {
     const { idUsuario } = req.params;
-    const user = await Usuario.findById(idUsuario).populate('rechazados', '_id');
+    
+    if (!ObjectID.isValid(idUsuario)) {
+      res.status(404).json({error: 'Error: idUsuario no válido'});
+    }
 
+    const user = await Usuario.findById(idUsuario).populate('rechazados', '_id');
+    
     res.status(200).json(user.rechazados);
   },
 
@@ -28,13 +33,13 @@ module.exports = {
 
       if (alreadyExists) {
 
-        res.status(200).json({error: "El usuario ya estaba marcado como rechazado", success: true, flag: "alreadyExists"});
-      } else {
-        rechazados.push(idBloq);
-        await Usuario.findByIdAndUpdate(_id, user);
-        
-        res.status(200).json({message: "El usuario fue marcado como rechazado con éxito", success: true, flag: "newBloq"});
+        return res.status(200).json({error: "El usuario ya estaba marcado como rechazado", success: true, flag: "alreadyExists"});
       }
+
+      rechazados.push(idBloq);
+      await Usuario.findByIdAndUpdate(_id, user);
+      
+      res.status(200).json({message: "El usuario fue marcado como rechazado con éxito", success: true, flag: "newBloq"});
 
     } catch (err) {
         
