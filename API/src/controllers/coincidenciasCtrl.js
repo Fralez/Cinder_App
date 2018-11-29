@@ -10,6 +10,8 @@ module.exports = {
       
       let coincidences = await Usuario.find(
         {
+          _id: { $ne: user._id },
+
           ciudad: user.ciudad,
           pais: user.pais,
           
@@ -87,6 +89,7 @@ module.exports = {
       res.status(200).json(bestCoincidences);
       
     } catch (err) {
+      console.log(err);
       res.status(404).json({error: "El usuario con idUsuario no pudo ser encontrado"});
     }
     

@@ -4,9 +4,9 @@
   "edad": "18",
   "sexo": "x",
   "sexoInteresado": "x",
-  "ciudad": "x",
-  "pais": "x",
-  "frasePersonal": "x",
+  "ciudad": "xxx",
+  "pais": "xxx",
+  "frasePersonal": "xxx",
   "meGusta": ["x", "x"],
   "noMeGusta": ["x", "x"]
 }
